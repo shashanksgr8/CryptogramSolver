@@ -120,8 +120,9 @@
 ###############################################################################
 
 ########################## ONLY FOR TEST CASES ################################
-original_list = ['I','think','the','code','works','.']
+original_list = ['a','think','the','cope','works','.']
 length_sorted_list = []
+solution_dictionary = {'a' : 'I', 'p' : 'd'}
 dictionary_memory = {}
 #################### REMOVE IT AFTER CODE IS COMPLETED ########################
 
@@ -161,21 +162,17 @@ def word_sorter(): # Sort 2.0
     return length_sorted_list
     #Assuming the length_sorted_list will be of no use, modified it to be the final list.
 
-# Work under progress
-#
-# def letter_corrector(): # Substituion 2.0
-#     global solution_dictionary
-#     for key in solution_dictionary:
-#         for element
-#         if key ==
-
-
-def sentence_maker(list):
+# Converting list into a string for output (*)
+def sentence_maker(list):   # White spaces brfore and after puntuations needs to be corrected
+    global solution_dictionary
     sentence = ''
     for element in list:
         sentence+=element+' '
+#     return sentence
+# def letter_swapper():           # This was originally written as a separate function to substitute solution_dictionary.
+    for key in solution_dictionary:
+        sentence = sentence.replace(key, solution_dictionary[key])
     return sentence
-
 
 if __name__ == '__main__':
     print('Original\t',original_list)
@@ -186,6 +183,6 @@ if __name__ == '__main__':
     # print(original_list)
     # print(length_sorted_list)
     word_sorter()
-    print('\nFinal list\t',length_sorted_list) # Change it to the final list name
-    #letter_corrector() should be added here.
+    print('\nFinal list\t',length_sorted_list)  # Change it to the final list name
     print('\nThe sentence\t',sentence_maker(length_sorted_list))
+    # letter_swapper()
