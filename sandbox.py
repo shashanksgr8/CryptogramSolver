@@ -119,9 +119,10 @@
 ###############################################################################
 ###############################################################################
 
-original_list = ['g', 'fytc', 'y', 'bmg']
+original_list = ['I','think','the','code','works','.'] # Test case
 length_sorted_list = []
 dictionary_memory = {}
+#solution_dictionary = {'g':''}
 
 
 def sort_list_by_length():
@@ -139,6 +140,7 @@ def dictionary_builder(original, compare):
                 dictionary_memory[compare.index(compare_element)] = original.index(original_element)
                 # original.remove(original_element)
 
+
 # def dictionary_builder(original, compare):
 #     for original_element in original:
 #         for compare_element in compare:
@@ -148,11 +150,29 @@ def dictionary_builder(original, compare):
 #                 break
 
 
+def word_sorter():
+    global dictionary_memory
+    global length_sorted_list
+    global original_list
+    # The original list would have been modified at step 8.
+    # Call the corresponding list from step 8.
+    for value in dictionary_memory.values():
+        length_sorted_list[value] = original_list[value]
+    return length_sorted_list
+    #Assuming the length_sorted_list will be of no use, modified it to be the final list.
+
+
+# def letter_corrector():
+#     global solution_dictionary
+
+
 if __name__ == '__main__':
-    print(original_list)
+    print('Original\t',original_list)
     length_sorted_list = sort_list_by_length().copy()
-    print(length_sorted_list)
+    print('\nSorted list\t',length_sorted_list)
     dictionary_builder(original_list, length_sorted_list)
+    print('\nDictionary\t',dictionary_memory)
     # print(original_list)
     # print(length_sorted_list)
-    print(str(dictionary_memory))
+    word_sorter()
+    print('\nFinal list\t',length_sorted_list)
