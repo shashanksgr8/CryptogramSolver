@@ -120,10 +120,12 @@
 ###############################################################################
 
 ########################## ONLY FOR TEST CASES ################################
-original_list = ['a','think','the','cope','works','.']
+original_list = ['a','thank','the','mode','works','.']
 length_sorted_list = []
-solution_dictionary = {'a' : 'I', 'p' : 'd'}
+solution_dictionary = {'m' : 'c', '.' : '!'}
 dictionary_memory = {}
+clue_key = 'a'
+clue_value = 'i'
 #################### REMOVE IT AFTER CODE IS COMPLETED ########################
 
 def sort_list_by_length():
@@ -149,16 +151,35 @@ def dictionary_builder(original, compare):
 #                 dictionary_memory[original_element] = compare.index(compare_element)
 #                 compare.remove(compare_element)
 #                 break
+#############################################################################
+#                                                                                           Sudheendra's part
+#############################################################################
 
+duplicated_list = original_list.copy()# Duplicating the list (string or list that I get from thr previous step)
+
+def clue_substitutor():
+    #global cipher
+    global original_list
+    global duplicated_list
+    #global clue_key
+    #global clue_value # These go in final code
+    for each in duplicated_list:
+        if (each == clue_key):
+            duplicated_list = [sub.replace(each, clue_value.upper()) for sub in duplicated_list]
+        else:
+            break
+    return duplicated_list
+
+############################################################################
 
 def word_sorter(): # Sort 2.0
     global dictionary_memory
     global length_sorted_list
-    global original_list
+    global duplicated_list
     # The original list would have been modified at step 8.
     # Call the corresponding list from step 8.
     for value in dictionary_memory.values():
-        length_sorted_list[value] = original_list[value]
+        length_sorted_list[value] = duplicated_list[value]
     return length_sorted_list
     #Assuming the length_sorted_list will be of no use, modified it to be the final list.
 
@@ -175,14 +196,16 @@ def sentence_maker(list):   # White spaces brfore and after puntuations needs to
     return sentence
 
 if __name__ == '__main__':
-    print('Original\t',original_list)
+    print('Original list\t',original_list)
     length_sorted_list = sort_list_by_length().copy()
-    print('\nSorted list\t',length_sorted_list)
+    print('\n\nSorted list\t',length_sorted_list)
     dictionary_builder(original_list, length_sorted_list)
-    print('\nDictionary\t',dictionary_memory)
+    print('\n\nDictionary\t',dictionary_memory)
+    print('\nThe list after clue substitution \n\t\t', clue_substitutor())
     # print(original_list)
     # print(length_sorted_list)
+    clue_substitutor()
     word_sorter()
-    print('\nFinal list\t',length_sorted_list)  # Change it to the final list name
-    print('\nThe sentence\t',sentence_maker(length_sorted_list))
+    print('\n\nFinal list\t',length_sorted_list)  # Change it to the final list name
+    print('\n\nThe sentence\t',sentence_maker(length_sorted_list))
     # letter_swapper()
