@@ -120,12 +120,13 @@
 ###############################################################################
 
 ########################## ONLY FOR TEST CASES ################################
-original_list = ['a','thank','the','mode','works','.']
+original_list = ['a','thank','the','moDe','words','.']  # Name suggestion: cipher_list
 length_sorted_list = []
-solution_dictionary = {'m' : 'c', '.' : '!'}
+solution_dictionary = {'solution_1':{'m' : 'c', '.' : '!'}, 'solution_2':{'d' : 'k', '.' : '?' }}
+# Keep in mind the format of nested dictionary
 dictionary_memory = {}
 clue_key = 'a'
-clue_value = 'i'
+clue_value = 'I'
 #################### REMOVE IT AFTER CODE IS COMPLETED ########################
 
 def sort_list_by_length():
@@ -151,18 +152,42 @@ def dictionary_builder(original, compare):
 #                 dictionary_memory[original_element] = compare.index(compare_element)
 #                 compare.remove(compare_element)
 #                 break
-#############################################################################
-#                                                                                           Sudheendra's part
-#############################################################################
+#
+####################################################################################
+#                            Sudheendra original code
+####################################################################################
+# def clue_substitutor():
+#     #global cipher
+#     #global clue_key
+#     #global clue_value # These go in final code
+#
+############################### ONLY FOR TEST CASES ################################
+#     cipher = ['a','thank','the','code','works','.']
+#     print('The list before substitution is', cipher)
+#     clue_key = 'a'
+#     clue_value = 'i'
+######################### REMOVE IT AFTER CODE IS COMPLETED ########################
+#
+#     cipher_duplicate = cipher.copy() #duplicating the list (string or list that I get from thr previous step)
+#     for each in cipher_duplicate:
+#         if (each == clue_key):
+#             cipher_duplicate = [sub.replace(each, clue_value.upper()) for sub in cipher_duplicate]
+#         else:
+#             break
+#     return cipher_duplicate
+# print('The list after clue substitution is', clue_substitutor()) #Remove this after completion
+#
+######################################################################################
 
-duplicated_list = original_list.copy()# Duplicating the list (string or list that I get from thr previous step)
+duplicated_list = original_list.copy()
+# Duplicating the cipher list (Step 7)
 
-def clue_substitutor():
-    #global cipher
-    global original_list
-    global duplicated_list
-    #global clue_key
-    #global clue_value # These go in final code
+def clue_substitutor(): # (Step 8)
+    # global cipher
+    # global clue_key
+    # global clue_value
+    # # Onle the above lines will be in final code
+    global duplicated_list  # Delete this
     for each in duplicated_list:
         if (each == clue_key):
             duplicated_list = [sub.replace(each, clue_value.upper()) for sub in duplicated_list]
@@ -170,9 +195,8 @@ def clue_substitutor():
             break
     return duplicated_list
 
-############################################################################
 
-def word_sorter(): # Sort 2.0
+def word_sorter():  # Sort 2.0
     global dictionary_memory
     global length_sorted_list
     global duplicated_list
@@ -181,31 +205,41 @@ def word_sorter(): # Sort 2.0
     for value in dictionary_memory.values():
         length_sorted_list[value] = duplicated_list[value]
     return length_sorted_list
-    #Assuming the length_sorted_list will be of no use, modified it to be the final list.
+    # Assuming the length_sorted_list will be of no use, modified it to be the final list.
 
-# Converting list into a string for output (*)
-def sentence_maker(list):   # White spaces brfore and after puntuations needs to be corrected
+
+def stringer(list):
+# Converting list into a string for output. Thus the name.(*)
+# White spaces brfore and after puntuations needs to be corrected.
     global solution_dictionary
     sentence = ''
     for element in list:
         sentence+=element+' '
-#     return sentence
-# def letter_swapper():           # This was originally written as a separate function to substitute solution_dictionary.
-    for key in solution_dictionary:
-        sentence = sentence.replace(key, solution_dictionary[key])
     return sentence
 
+def letter_swapper():
+# To substitute the solutions.
+    for solution in solution_dictionary:
+        sentence = stringer(length_sorted_list)
+        for key in solution_dictionary[solution]:
+            sentence = sentence.replace(key,solution_dictionary[solution][key])
+            #print(key)
+            #print(solution_dictionary[solution][key])
+        print('\n\t' + sentence)
+
 if __name__ == '__main__':
-    print('Original list\t',original_list)
+    print('\n\nOriginal list:\n\n',original_list)
     length_sorted_list = sort_list_by_length().copy()
-    print('\n\nSorted list\t',length_sorted_list)
+    print('\n\nSorted list:\n\n',length_sorted_list)
     dictionary_builder(original_list, length_sorted_list)
-    print('\n\nDictionary\t',dictionary_memory)
-    print('\nThe list after clue substitution \n\t\t', clue_substitutor())
-    # print(original_list)
-    # print(length_sorted_list)
+    print('\n\nDictionary:\n\n',dictionary_memory)
+    print('\n\nThe list after clue substitution:\n\n', clue_substitutor())
+    #print(original_list)
+    #print(length_sorted_list)
     clue_substitutor()
     word_sorter()
-    print('\n\nFinal list\t',length_sorted_list)  # Change it to the final list name
-    print('\n\nThe sentence\t',sentence_maker(length_sorted_list))
-    # letter_swapper()
+    #print('\n\nFinal list:\n',length_sorted_list)  # Change it to the final list name
+    #print('\n\nThe sentence:\n',sentence_maker(length_sorted_list))
+    stringer(length_sorted_list)
+    print('\n\nPossible answers:')
+    letter_swapper()
