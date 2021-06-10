@@ -120,10 +120,10 @@
 ###############################################################################
 
 ########################## ONLY FOR TEST CASES ################################
-original_list = ['a','thank','the','moDe','words','.']  # Name suggestion: cipher_list
+original_list = ['a','thank','the','moDe','words','.']  # Name suggestion: cipher_list.
 length_sorted_list = []
 solution_dictionary = {'solution_1':{'m' : 'c', '.' : '!'}, 'solution_2':{'d' : 'k', '.' : '?' }}
-# Keep in mind the format of nested dictionary
+# Keep in mind the format of nested dictionary.
 dictionary_memory = {}
 clue_key = 'a'
 clue_value = 'I'
@@ -186,8 +186,8 @@ def clue_substitutor(): # (Step 8)
     # global cipher
     # global clue_key
     # global clue_value
-    # # Onle the above lines will be in final code
-    global duplicated_list  # Delete this
+    # # Onle the above lines will be in final code.
+    global duplicated_list  # Delete this.
     for each in duplicated_list:
         if (each == clue_key):
             duplicated_list = [sub.replace(each, clue_value.upper()) for sub in duplicated_list]
@@ -225,7 +225,9 @@ def letter_swapper():
             sentence = sentence.replace(key,solution_dictionary[solution][key])
             #print(key)
             #print(solution_dictionary[solution][key])
-        print('\n\t' + sentence)
+        #print('\n\t' + sentence)
+        print('\n\t' + sentence.upper()) # To get the final results in uppercase.
+
 
 if __name__ == '__main__':
     print('\n\nOriginal list:\n\n',original_list)
@@ -238,7 +240,7 @@ if __name__ == '__main__':
     #print(length_sorted_list)
     clue_substitutor()
     word_sorter()
-    #print('\n\nFinal list:\n',length_sorted_list)  # Change it to the final list name
+    #print('\n\nFinal list:\n',length_sorted_list)  # Change it to the final list name.
     #print('\n\nThe sentence:\n',sentence_maker(length_sorted_list))
     stringer(length_sorted_list)
     print('\n\nPossible answers:')
