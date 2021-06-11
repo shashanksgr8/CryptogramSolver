@@ -118,11 +118,15 @@
 # End of tkinter GUI test run
 ###############################################################################
 ###############################################################################
-
+#Imports
+from nltk.corpus import wordnet
+from nltk.corpus import words
+from PyDictionary import PyDictionary
 ########################## ONLY FOR TEST CASES ################################
-original_list = ['a','thank','the','moDe','words','.']  # Name suggestion: cipher_list.
+
+original_list = ['a', 'do', 'not' ,'thank','the', 'moDe','words']  # Name suggestion: cipher_list.
 length_sorted_list = []
-solution_dictionary = {'solution_1':{'m' : 'c', '.' : '!'}, 'solution_2':{'d' : 'k', '.' : '?' }}
+solution_dictionary = {'solution_1':{'m' : 'c','z':'y'}, 'solution_2':{'d' : 'k', 'j': 'z'}}
 # Keep in mind the format of nested dictionary.
 dictionary_memory = {}
 clue_key = 'a'
@@ -152,41 +156,17 @@ def dictionary_builder(original, compare):
 #                 dictionary_memory[original_element] = compare.index(compare_element)
 #                 compare.remove(compare_element)
 #                 break
-#
-####################################################################################
-#                            Sudheendra original code
-####################################################################################
-# def clue_substitutor():
-#     #global cipher
-#     #global clue_key
-#     #global clue_value # These go in final code
-#
-############################### ONLY FOR TEST CASES ################################
-#     cipher = ['a','thank','the','code','works','.']
-#     print('The list before substitution is', cipher)
-#     clue_key = 'a'
-#     clue_value = 'i'
-######################### REMOVE IT AFTER CODE IS COMPLETED ########################
-#
-#     cipher_duplicate = cipher.copy() #duplicating the list (string or list that I get from thr previous step)
-#     for each in cipher_duplicate:
-#         if (each == clue_key):
-#             cipher_duplicate = [sub.replace(each, clue_value.upper()) for sub in cipher_duplicate]
-#         else:
-#             break
-#     return cipher_duplicate
-# print('The list after clue substitution is', clue_substitutor()) #Remove this after completion
-#
-######################################################################################
+
 
 duplicated_list = original_list.copy()
 # Duplicating the cipher list (Step 7)
+
 
 def clue_substitutor(): # (Step 8)
     # global cipher
     # global clue_key
     # global clue_value
-    # # Onle the above lines will be in final code.
+    # # Only the above lines will be in final code.
     global duplicated_list  # Delete this.
     for each in duplicated_list:
         if (each == clue_key):
@@ -215,33 +195,47 @@ def stringer(list):
     sentence = ''
     for element in list:
         sentence+=element+' '
-    return sentence
+    return (sentence)
 
-def letter_swapper():
-# To substitute the solutions.
+
+def uppercase(list):
+    global duplicated_list
+    for letter in list:
+        list[list.index(letter)] =  list[list.index(letter)].upper()
+    return list
+
+
+def dictionary_lookup(sentence):
+    for eachword in sentence:
+        if not PyDictionary.meaning(eachword):
+            print('error404 (no match found for "' + eachword + '" in dictionary): \n')
+    return stringer(sentence)
+
+
+def letter_swapper():   # To substitute the solutions.
+    global duplicated_list
+    global solution_dictionary
     for solution in solution_dictionary:
-        sentence = stringer(length_sorted_list)
+        sentence = duplicated_list
         for key in solution_dictionary[solution]:
-            sentence = sentence.replace(key,solution_dictionary[solution][key])
-            #print(key)
-            #print(solution_dictionary[solution][key])
-        #print('\n\t' + sentence)
-        print('\n\t' + sentence.upper()) # To get the final results in uppercase.
+            #sentence = sentence.replace(key,solution_dictionary[solution][key])
+            sentence = [sub.replace(key, solution_dictionary[solution][key]) for sub in sentence]
+        if dictionary_lookup(sentence):
+            print('\nProbable answer: ', stringer(uppercase(sentence)),'\n\n')
+        else:
+            break
 
 
 if __name__ == '__main__':
-    print('\n\nOriginal list:\n\n',original_list)
+    print('\nOriginal list: ',original_list)
     length_sorted_list = sort_list_by_length().copy()
-    print('\n\nSorted list:\n\n',length_sorted_list)
+    print('\nSorted list: ',length_sorted_list)
     dictionary_builder(original_list, length_sorted_list)
-    print('\n\nDictionary:\n\n',dictionary_memory)
-    print('\n\nThe list after clue substitution:\n\n', clue_substitutor())
-    #print(original_list)
-    #print(length_sorted_list)
+    print('\nDictionary: ',dictionary_memory)
+    print('\nThe list after clue substitution: ', clue_substitutor())
+    print('\n\t___\t___\t___\t___\t___\t___\t___\t___')
     clue_substitutor()
+    print('\n')
     word_sorter()
-    #print('\n\nFinal list:\n',length_sorted_list)  # Change it to the final list name.
-    #print('\n\nThe sentence:\n',sentence_maker(length_sorted_list))
-    stringer(length_sorted_list)
-    print('\n\nPossible answers:')
+    stringer(duplicated_list)
     letter_swapper()
