@@ -118,20 +118,21 @@
 # End of tkinter GUI test run
 ###############################################################################
 ###############################################################################
-#Imports
-from nltk.corpus import wordnet
+# Imports
+from nltk.corpus import wordnet as wn
 from nltk.corpus import words
-from PyDictionary import PyDictionary
 ########################## ONLY FOR TEST CASES ################################
 
 original_list = ['a', 'do', 'not' ,'thank','the', 'moDe','words']  # Name suggestion: cipher_list.
 length_sorted_list = []
-solution_dictionary = {'solution_1':{'m' : 'c','z':'y'}, 'solution_2':{'d' : 'k', 'j': 'z'}}
+solution_dictionary = {'solution_1': {'m': 'c', 'z': 'y'}, 'solution_2': {'d': 'k', 'j': 'z'}}
 # Keep in mind the format of nested dictionary.
 dictionary_memory = {}
 clue_key = 'a'
 clue_value = 'I'
+
 #################### REMOVE IT AFTER CODE IS COMPLETED ########################
+
 
 def sort_list_by_length():
     temp_list = []
@@ -162,7 +163,7 @@ duplicated_list = original_list.copy()
 # Duplicating the cipher list (Step 7)
 
 
-def clue_substitutor(): # (Step 8)
+def clue_substitutor():  # (Step 8)
     # global cipher
     # global clue_key
     # global clue_value
@@ -194,21 +195,27 @@ def stringer(list):
     global solution_dictionary
     sentence = ''
     for element in list:
-        sentence+=element+' '
+        sentence += element + ' '
     return (sentence)
 
 
 def uppercase(list):
     global duplicated_list
     for letter in list:
-        list[list.index(letter)] =  list[list.index(letter)].upper()
+        list[list.index(letter)] = list[list.index(letter)].upper()
     return list
 
 
 def dictionary_lookup(sentence):
     for eachword in sentence:
-        if not PyDictionary.meaning(eachword):
-            print('error404 (no match found for "' + eachword + '" in dictionary): \n')
+        if eachword not in words.words():
+            #print('"' + eachword + '" is not in wordnet') # (1)
+            if wn.synsets(eachword):
+                #print('But it is in words()\n') # (2)
+                # Uncomment (1) and (2) to see how this two level filtering works.
+                continue
+            else:
+                print('Error404: No match found for "' + eachword + '" in dictionary \n')
     return stringer(sentence)
 
 
@@ -221,19 +228,18 @@ def letter_swapper():   # To substitute the solutions.
             #sentence = sentence.replace(key,solution_dictionary[solution][key])
             sentence = [sub.replace(key, solution_dictionary[solution][key]) for sub in sentence]
         if dictionary_lookup(sentence):
-            print('\nProbable answer: ', stringer(uppercase(sentence)),'\n\n')
+            print('\nProbable answer: ', stringer(uppercase(sentence)), '\n\n')
         else:
             break
 
 
 if __name__ == '__main__':
-    print('\nOriginal list: ',original_list)
+    print('\nOriginal list: ', original_list)
     length_sorted_list = sort_list_by_length().copy()
-    print('\nSorted list: ',length_sorted_list)
+    print('\nSorted list: ', length_sorted_list)
     dictionary_builder(original_list, length_sorted_list)
-    print('\nDictionary: ',dictionary_memory)
+    print('\nDictionary: ', dictionary_memory)
     print('\nThe list after clue substitution: ', clue_substitutor())
-    print('\n\t___\t___\t___\t___\t___\t___\t___\t___')
     clue_substitutor()
     print('\n')
     word_sorter()
