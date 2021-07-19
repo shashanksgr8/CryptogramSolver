@@ -123,9 +123,11 @@ from nltk.corpus import wordnet as wn
 from nltk.corpus import words
 ########################## ONLY FOR TEST CASES ################################
 
-original_list = ['a', 'do', 'not' ,'thank','the', 'moDe','words']  # Name suggestion: cipher_list.
+# Name suggestion: cipher_list.
+original_list = ['a', 'do', 'not', 'thank', 'the', 'moDe', 'words']
 length_sorted_list = []
-solution_dictionary = {'solution_1': {'m': 'c', 'z': 'y'}, 'solution_2': {'d': 'k', 'j': 'z'}}
+solution_dictionary = {'solution_1': {
+    'm': 'c', 'z': 'y'}, 'solution_2': {'d': 'k', 'j': 'z'}}
 # Keep in mind the format of nested dictionary.
 dictionary_memory = {}
 clue_key = 'a'
@@ -146,7 +148,8 @@ def dictionary_builder(original, compare):
     for original_element in original:
         for compare_element in compare:
             if compare_element == original_element:
-                dictionary_memory[compare.index(compare_element)] = original.index(original_element)
+                dictionary_memory[compare.index(
+                    compare_element)] = original.index(original_element)
                 # original.remove(original_element)
 
 
@@ -171,7 +174,8 @@ def clue_substitutor():  # (Step 8)
     global duplicated_list  # Delete this.
     for each in duplicated_list:
         if (each == clue_key):
-            duplicated_list = [sub.replace(each, clue_value.upper()) for sub in duplicated_list]
+            duplicated_list = [sub.replace(
+                each, clue_value.upper()) for sub in duplicated_list]
         else:
             break
     return duplicated_list
@@ -190,8 +194,8 @@ def word_sorter():  # Sort 2.0
 
 
 def stringer(list):
-# Converting list into a string for output. Thus the name.(*)
-# White spaces brfore and after puntuations needs to be corrected.
+    # Converting list into a string for output. Thus the name.(*)
+    # White spaces brfore and after puntuations needs to be corrected.
     global solution_dictionary
     sentence = ''
     for element in list:
@@ -215,7 +219,8 @@ def dictionary_lookup(sentence):
                 # Uncomment (1) and (2) to see how this two level filtering works.
                 continue
             else:
-                print('Error404: No match found for "' + eachword + '" in dictionary \n')
+                print('Error404: No match found for "' +
+                      eachword + '" in dictionary \n')
     return stringer(sentence)
 
 
@@ -226,7 +231,8 @@ def letter_swapper():   # To substitute the solutions.
         sentence = duplicated_list
         for key in solution_dictionary[solution]:
             #sentence = sentence.replace(key,solution_dictionary[solution][key])
-            sentence = [sub.replace(key, solution_dictionary[solution][key]) for sub in sentence]
+            sentence = [sub.replace(
+                key, solution_dictionary[solution][key]) for sub in sentence]
         if dictionary_lookup(sentence):
             print('\nProbable answer: ', stringer(uppercase(sentence)), '\n\n')
         else:
